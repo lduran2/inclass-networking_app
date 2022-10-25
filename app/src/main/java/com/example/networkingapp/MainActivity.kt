@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
 
         Thread {
             // port implied by protocal
-            val url = URI("https://temple.edu").toURL()
+            val url = URI("https://www.temple.edu").toURL()
 
             val websiteContent = url.openStream()
                 .bufferedReader().readLine()
