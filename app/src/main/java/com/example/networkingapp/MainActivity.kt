@@ -11,7 +11,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         Thread {
-            val url = URI("temple.edu").toURL()
+            // port implied by protocal
+            val url = URI("https://temple.edu").toURL()
 
             val websiteContent = url.openStream()
                 .bufferedReader().readLine()
