@@ -14,8 +14,17 @@ class MainActivity : AppCompatActivity() {
             // port implied by protocal
             val url = URI("https://www.temple.edu").toURL()
 
-            val websiteContent = url.openStream()
-                .bufferedReader().readLine()
+            // read the entire web page
+            val sb: StringBuilder
+            url.openStream()
+                .bufferedReader().apply {
+                    sb = StringBuilder()
+                    while (readLine().let {
+                        sb.append(it)
+                        it != null
+                    })
+                }
+            val websiteContent = sb.toString()
 
             Log.d("Website", websiteContent)
         }
