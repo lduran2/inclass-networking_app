@@ -6,14 +6,19 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.util.Log
+import android.webkit.WebView
 import android.widget.TextView
 import java.net.URI
 
 class MainActivity : AppCompatActivity() {
     lateinit var textView: TextView
+    lateinit var webView: WebView
 
     val downloadHandler = Handler(Looper.getMainLooper()) {
-        textView.text = it.obj.toString()
+        it.obj.toString().let {
+            textView.text = it
+            webView.loadDataWithBaseURL("", it, "text/html", "UTF-8", null)
+        }
         true
     }
 
@@ -22,6 +27,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         textView = findViewById(R.id.textView)
+        webView = findViewById(R.id.webView)
+
         Thread {
             // port implied by protocal
             val url = URI("https://www.temple.edu").toURL()
@@ -32,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 .bufferedReader().apply {
                     sb = StringBuilder()
                     while (readLine().let {
-                        sb.append(it)
+                        sb.append(it).append("\n")
                         it != null
                     });
                 }
